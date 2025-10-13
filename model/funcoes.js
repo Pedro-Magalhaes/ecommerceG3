@@ -1,6 +1,7 @@
 // CARRINHO:
 
-// Salvar produtos no carrinho
+// ------------------- Salvar produtos no carrinho ------------------- 
+
 function adicionarAoCarrinho(nome, id, preco, imagem) {
   let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
@@ -27,9 +28,25 @@ function adicionarAoCarrinho(nome, id, preco, imagem) {
   alert(nome + " foi adicionado ao carrinho!");
 }
 
+// --------------- Atualizar valor total do carrinho ---------------- 
+
+function atualizarTotal() {
+  const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+  let total = carrinho.reduce((soma, item) => soma + Number(item.preco || 0), 0);
+
+  const totalElem = document.getElementById('total');
+  if (totalElem) {
+    totalElem.textContent = "Total: R$ " + total.toFixed(2);
+  }
+}
+
+  // Chama ao carregar
+  window.addEventListener('load', atualizarTotal);
+
 // FAVORITOS:
 
-// Salvar produtos nos favoritos
+// ------------------- Salvar produtos nos favoritos ------------------- 
+
 function adicionarAFavoritos(nome, id, preco, imagem) {
   let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
  const usuario = JSON.parse(localStorage.getItem("usuarioAtual"));

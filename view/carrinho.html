@@ -1,160 +1,48 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho</title>
-    <link rel="stylesheet" href="styles/estilo.css">
-    <script src="../model/funcoes.js" defer></script>
-    <script src="../control/logica-botoes.js" defer></script>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho</title>
+  <link rel="stylesheet" href= "styles/estilo.css">
+  <script src="../control/logica-carrinho.js" defer></script>
+  <script src="../control/logica-usuario.js" defer></script> 
 </head>
 <body>
     
-    <div id="topbar">
-        <a href="index.html">  <img id="logo" class="logo" src="IMG/logo.png" alt="ML"><img></a>
-        <div id="icones-pequenos">
-            <a href="login.html"> <img id="perfil" class="icon" src="IMG/perfil.png" alt="perfil"/> </a>
-            <a href="favoritos.html"> <img id="favorite" class="icon" src="IMG/favorites.png" alt="favorite"/>  </a>
-             <a href="carrinho.html"> <img id="cart" class="icon" src="IMG/logo_cart_novo.png" alt="cart"/></a>
-        </div>
+  <div id="topbar">
+    <a href="index.html"><img id="logo" class="logo" src="IMG/logo.png" alt="ML"><img></a>
+    <div id="icones-pequenos">
+      <a href="login.html"> <img id="perfil" class="icon" src="IMG/perfil.png" alt="perfil"/> </a>
+      <a href="favoritos.html"> <img id="favorite" class="icon" src="IMG/favorites.png" alt="favorite"/>  </a>
+      <a href="carrinho.html"> <img id="cart" class="icon" src="IMG/carrinho.png" alt="cart"/></a>
     </div>
+  </div>
 
-       <br/><br/>
+  <br/><br/>
 
-    <div id="carrinho-container">
-      <h1 class="fav">Seu Carrinho</h1>
-      <div id="listaCarrinho"></div>
-      <button id="removerTodos">Remover Tudo</button>
+  <div id="carrinho-container">
+    <h1 class="fav">Seu Carrinho</h1>
+    <div id="listaCarrinho"></div>
+    <button id="removerTodos">Remover Tudo</button>
+  </div>
+
+  <div id="carrinho-container">
+    <h1 class="fav">Resumo da Compra</h1>
+    <div class="total-container">
+      <p id="total" class="texto"></p>
     </div>
+    <p class="texto">Forma de pagamento:</p>
+    <button id="finalizar">Finalizar Compra</button>
+  </div>
 
-    <div id="carrinho-container">
-      <h1 class="fav">Resumo da Compra</h1>
-      <div class="total-container">
-        <p id="total" class="texto"></p>
-      </div>
-      <p class="texto">Forma de pagamento:</p>
-      <button id="finalizar">Finalizar Compra</button>
-    </div>
- 
-<script>
-  function renderCarrinho() {
-    const div = document.getElementById('listaCarrinho');
-    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-
-    if (carrinho.length === 0) {
-      div.innerHTML = `
-        <div class="msg-vazio">
-          <p>Oops... parece que seu carrinho está vazio!</p>
-          <a href="index.html" class="btn-voltar">Ver produtos</a>
-        </div>
-      `;
-      document.getElementById('total').textContent = "Total: R$ 0,00";
-
-      const btn = document.getElementById('finalizar');
-      if (btn) btn.style.display = 'none';
-      const tc = document.querySelector('.total-container');
-      if (tc) tc.style.display = 'none';
-      const btnR= document.getElementById('removerTodos');
-      if(btnR) btnR.style.display='none';
-      return;
-    }
-
-    div.innerHTML = carrinho.map((item, i) => `
-      <div class="item-carrinho">
-        <img class="img-carrinho" src="${item.imagem}" width="100" alt="${item.nome}">
-        <p class="tit-carrinho">${item.nome} - R$ ${item.preco}</p>
-
-        <div class="controle-quantidade">
-          <button class="btn-diminuir" data-index="${i}">-</button>
-          <span class="quantidade">${item.quantidade || 1}</span>
-          <button class="btn-aumentar" data-index="${i}">+</button>
-        </div>
-
-        <button class="btn-remover" data-index="${i}" aria-label="Remover ${item.nome}">
-          Remover
-        </button>
-      </div>
-    `).join('');
-
-    const total = carrinho.reduce((soma, item) => soma + Number(item.preco || 0) * (item.quantidade || 1), 0);
-    document.getElementById('total').textContent = "Total: R$ " + total.toFixed(2);
-  }
- 
-  // chama ao carregar a página
-  window.addEventListener('load', renderCarrinho);
-</script>
-
-<script>
-document.addEventListener('click', (e) => {
-  let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-
-  // Aumentar quantidade
-  if (e.target.classList.contains('btn-aumentar')) {
-    const idx = Number(e.target.dataset.index);
-    carrinho[idx].quantidade = (carrinho[idx].quantidade || 1) + 1;
-  }
-
-  // Diminuir quantidade
-  if (e.target.classList.contains('btn-diminuir')) {
-    const idx = Number(e.target.dataset.index);
-    if ((carrinho[idx].quantidade || 1) > 1) {
-      carrinho[idx].quantidade -= 1;
-    } else {
-      carrinho.splice(idx, 1);
-    }
-  }
-
-  // Remover completamente
-  if (e.target.classList.contains('btn-remover')) {
-    const idx = Number(e.target.dataset.index);
-    carrinho.splice(idx, 1);
-  }
-
-  localStorage.setItem('carrinho', JSON.stringify(carrinho));
-  renderCarrinho();
-});
-</script>
-       
-<script>
-  function atualizarTotal() {
-    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-    let total = carrinho.reduce((soma, item) => soma + Number(item.preco || 0) * (item.quantidade || 1), 0);
-    document.getElementById('total').textContent = "Total: R$ " + total.toFixed(2);
-  }
-
-  // Chama ao carregar
-  window.addEventListener('load', atualizarTotal);
-</script>
- 
-<script>
-  document.getElementById("removerTodos").onclick = () => {
-    localStorage.removeItem("carrinho");
-    renderCarrinho();
-  };      
-</script>
-
-<script>
-document.getElementById("finalizar").onclick = () => {
-  const usuario = JSON.parse(localStorage.getItem("usuarioAtual"));
-
-  if (usuario) {
-    alert("Compra concluída com sucesso, obrigada por comprar conosco!");
-    localStorage.removeItem("carrinho"); 
-    renderCarrinho(); 
-  } else {
-    alert("É necessário se cadastrar para finalizar sua compra!");
-    window.location.href = "login.html";
-  }
-};
-</script>
-
-<footer id="rodape">
+  <footer id="rodape">
     </br>
     <a href="sobreNos.html" class="texto-rodape">Sobre nós</a>
-    <h2 class="texto-rodape">MoveLar - Móveis e acessórios para todos os ambientes. Conforto, praticidade e estilo para sua casa e escritório.</h2>
-</footer>
-    
-<script src="../control/logica-usuario.js"></script> 
+    <h2 class="texto-rodape">MoveLar - Móveis e acessórios para todos os ambientes. 
+    Conforto, praticidade e estilo para sua casa e escritório.</h2>
+  </footer>
+  <script src="../model/funcoes.js" ></script>
+  <script src="renderizar-carrinho.js" ></script>
 </body>
 </html>

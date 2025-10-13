@@ -234,6 +234,17 @@ button.btn-carrinho{
   justify-items: center;
   text-align: center;
 }
+button.btn-favoritos{
+  background-color: #3ac79d;
+  color:white;
+  font-family: "primaria";
+  border-radius:20px;
+  border: 5px #3ac79d solid;
+  font-size: 15px;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
 /*
 .produto-img{
   display: inline-block;
@@ -293,6 +304,10 @@ button.btn-carrinho{
 .btn-carrinho{ width:100%; padding:10px; border:none; border-radius:8px; background:#28a745; color:#fff; cursor:pointer; }
 .btn-carrinho:hover{ background:#218838; }
 button.btn-carrinho:hover{
+  background-color: #1f6e57;
+}
+.btn-favoritos:hover{ background:#218838; }
+button.btn-favoritos:hover{
   background-color: #1f6e57;
 }
  
@@ -364,8 +379,46 @@ button.btn-carrinho:hover{
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
+  align-items: center;
 }
-
+#btn-add-fav{
+  display: block;
+  text-align: center;
+  align-items: center;
+  margin: 10px auto 15px auto;
+  border-radius: 6px;
+  padding:10px;
+  width: 300px;
+  height:50px;
+  font-size: 20px;
+  background-color: #8d4654;
+  border: 5px #8d4654 solid;
+  color: white;
+  font-family: 'Principal';
+}
+#btn-add-fav:hover{
+  background-color: #be7786;
+  border-color: #be7786;
+}
+#btn-add-carrinho:hover{
+  background-color: #be7786;
+  border-color: #be7786;
+}
+#btn-add-carrinho{
+  display: block;
+  text-align: center;
+  align-items: center;
+  margin: 10px auto 15px auto;
+  border-radius: 6px;
+  padding:10px;
+  width: 300px;
+  height:50px;
+  font-size: 20px;
+  background-color: #8d4654;
+  border: 5px #8d4654 solid;
+  color: white;
+  font-family: 'Principal';
+}
 .btn-add-carrinho:hover, .btn-add-fav:hover {
   background-color: #721f2f;
   transform: translateY(-2px);
@@ -912,3 +965,48 @@ h1.fav {
     justify-content: center;
     align-items: stretch;
 }
+  }
+
+#produto-imagem{
+  align-items: center;
+  display: block;
+  margin:10px;
+  padding:10px;
+}
+/*RESPONSIVIDADE*/
+@media screen and (400px <=width <=800px){
+ 
+ 
+  
+    #filtroEsq{
+    position: static;
+    width: 90%;
+    max-width: 360px;
+    margin: 0 auto 20px auto;  /* espaço abaixo p/ os cards */
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 12px;
+  }
+
+  /* Produtos: centralizados e logo abaixo do filtro */
+  #produtos-container{
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    float: none !important;
+
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto 40px auto; /* centraliza e dá respiro até o rodapé */
+  }
+
+  /* A grade passa a 1 coluna e centraliza cada card */
+  .grid{
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+@media screen and (1080px <=width <=1920px){
+  
+}
+

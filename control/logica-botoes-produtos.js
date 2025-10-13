@@ -1,18 +1,7 @@
-// BARRA DE PESQUISA:
-
-/*document.getElementById("search-button").addEventListener("click", function() {
-  const query = document.getElementById("search-input").value.trim();
-  if (query) {
-    // Exemplo: redirecionar para uma página de resultados
-    window.location.href = "resultados.html?q=" + encodeURIComponent(query);
-  } else {
-    alert("Digite algo para pesquisar!");
-  }
-});*/
-
 // CARRINHO:
 
-//Adicionar ao carrinho
+// ------------------- Adicionar ao carrinho ------------------- 
+
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.btn-carrinho');
   if (!btn) return;
@@ -27,6 +16,23 @@ document.addEventListener('click', (e) => {
 
 // FAVORITOS:
 
+// ------------------- Adicionar aos favoritos ------------------- 
+
+document.addEventListener('click', (e) => {
+
+  
+  const btn = e.target.closest('.btn-favoritos');
+  if (!btn) return;
+
+  const nome   = btn.dataset.nome;
+  const id     = Number(btn.dataset.id);
+  const preco  = Number(btn.dataset.preco);
+  const imagem = btn.dataset.imagem;
+
+  adicionarAFavoritos(nome, id, preco, imagem);
+});
+
+// BUSCA:
  document.addEventListener('click', (e) => {
   // Verifica se clicou no botão de carrinho
   const usuario = JSON.parse(localStorage.getItem("usuarioAtual"));
@@ -48,6 +54,10 @@ document.addEventListener('click', (e) => {
   }
 });
 
+document.getElementById('search-button').addEventListener('click', buscarProduto);
+
+async function buscarProduto() {
+  document.getElementById('cate').style.display = 'none';
 // Pega os elementos, mas só adiciona evento se eles existirem na página
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -62,6 +72,7 @@ if (searchInput && searchButton) {
   });
 // Busca ao clicar no botão
   searchButton.addEventListener('click', buscarProduto);
+}
 }
 
  async function buscarProduto() {

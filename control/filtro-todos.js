@@ -41,6 +41,24 @@
     if (/\bpoltrona(s)?\b/.test(n)) out.push("poltrona");
     return out;
   }
+
+    (s || "").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+   function tiposDoNome(nome) {
+  const n = norm(nome);           // "Espreguiçadeira X" -> "espreguicadeira x"
+  const out = [];
+
+  if (/\bmesa(s)?\b/.test(n)) out.push("mesa");
+  if (/\bcadeira(s)?\b/.test(n)) out.push("cadeira");
+  if (/\bcama(s)?\b/.test(n)) out.push("cama");
+  if (/\bsofa(s)?\b/.test(n)) out.push("sofa");                 // "sofá" -> "sofa"
+  if (/\bpoltrona(s)?\b/.test(n)) out.push("poltrona");
+
+  // aqui estava o problema — compare SEM acento, mas empurre COM acento,
+  // porque o value do checkbox é "espreguiçadeira"
+  if (/\bespreguicadeira(s)?\b/.test(n)) out.push("espreguiçadeira");
+
+  return out;
+}
   function toNumberBR(v) {
     if (typeof v === "number") return v;
     if (typeof v !== "string") return NaN;
