@@ -902,4 +902,13 @@ h1.fav {
   min-width: 24px;
   text-align: center;
   font-weight: bold;
-  }
+}
+
+.carousel-btns {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: stretch;
+}
