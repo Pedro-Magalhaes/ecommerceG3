@@ -72,6 +72,7 @@ img.categoria {
   border: 1px solid #ccc;
   border-radius: 20px;
   font-size: 24px;
+  font-family: 'secundaria';
 }
 
 #search-button {
@@ -86,6 +87,7 @@ img.categoria {
   cursor: pointer;
   margin: 1%;
   display:inline-block;
+  font-family: 'secundaria';
 }
 
 #search-button:hover {
@@ -966,8 +968,6 @@ h1.fav {
 /*RESPONSIVIDADE*/
 @media screen and (400px <=width <=800px){
  
- 
-  
     #filtroEsq{
     position: static;
     width: 90%;
@@ -995,7 +995,31 @@ h1.fav {
     grid-template-columns: 1fr;
     justify-items: center;
   }
+
+  #search-container {
+    padding-bottom: 1rem;
+  }
+
+  #search-input {
+    width: 80%;
+    height:70px;
+    font-size: 20px;
+  }
 }
+
+@media screen and (800px <=width <=1080px){
+
+  #search-container {
+    padding-bottom: 1rem;
+  }
+
+  #search-input {
+    width: 80%;
+    height:80px;
+    font-size: 22px;
+  }
+}
+
 @media screen and (1080px <=width <=1920px){
   
 }
