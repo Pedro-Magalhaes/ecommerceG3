@@ -31,6 +31,7 @@
       .toLowerCase()
       .normalize("NFD")
       .replace(/\p{Diacritic}/gu, "");
+
   function tiposDoNome(nome) {
     const n = norm(nome);
     const out = [];
@@ -42,7 +43,6 @@
     return out;
   }
 
-    (s || "").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
    function tiposDoNome(nome) {
   const n = norm(nome);           // "Espreguiçadeira X" -> "espreguicadeira x"
   const out = [];
