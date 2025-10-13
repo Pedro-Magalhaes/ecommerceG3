@@ -963,3 +963,39 @@ h1.fav {
   margin:10px;
   padding:10px;
 }
+/*RESPONSIVIDADE*/
+@media screen and (400px <=width <=800px){
+ 
+ 
+  
+    #filtroEsq{
+    position: static;
+    width: 90%;
+    max-width: 360px;
+    margin: 0 auto 20px auto;  /* espaço abaixo p/ os cards */
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 12px;
+  }
+
+  /* Produtos: centralizados e logo abaixo do filtro */
+  #produtos-container{
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    float: none !important;
+
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto 40px auto; /* centraliza e dá respiro até o rodapé */
+  }
+
+  /* A grade passa a 1 coluna e centraliza cada card */
+  .grid{
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+@media screen and (1080px <=width <=1920px){
+  
+}
