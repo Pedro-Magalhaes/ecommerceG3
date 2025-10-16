@@ -1,4 +1,4 @@
- (function () {
+(function () {
   // descobre nome do arquivo da página, ex: "sala.html"
   const path = window.location.pathname;
   const file = path.split("/").pop().replace(".html", "");
@@ -12,10 +12,8 @@
     escritorio: "Escritorio",
   };
 
-
   // Se não reconhece a página, não roda
   if (!(file in PAGE_CATEGORIAS)) return;
-
 
   const DATA_URL = "../model/produtos.json";
   const grid = document.getElementById("grid");
@@ -29,7 +27,22 @@
 
   // --- utils ---
   const norm = (s) =>
-    (s || "").toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+    (s || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+
+  function tiposDoNome(nome) {
+    const n = norm(nome);
+    const out = [];
+    if (/\bmesa(s)?\b/.test(n)) out.push("mesa");
+    if (/\bcadeira(s)?\b/.test(n)) out.push("cadeira");
+    if (/\bcama(s)?\b/.test(n)) out.push("cama");
+    if (/\bsofa\b/.test(n) || /\bsof[aá]\b/.test(n)) out.push("sofa");
+    if (/\bpoltrona(s)?\b/.test(n)) out.push("poltrona");
+    return out;
+  }
+
    function tiposDoNome(nome) {
   const n = norm(nome);           // "Espreguiçadeira X" -> "espreguicadeira x"
   const out = [];
@@ -49,7 +62,10 @@
   function toNumberBR(v) {
     if (typeof v === "number") return v;
     if (typeof v !== "string") return NaN;
-    const s = v.replace(/[^\d,.-]/g, "").replace(/\./g, "").replace(",", ".");
+    const s = v
+      .replace(/[^\d,.-]/g, "")
+      .replace(/\./g, "")
+      .replace(",", ".");
     return parseFloat(s);
   }
   function brl(v) {
@@ -79,12 +95,19 @@
       link.href = `produto.html?id=${p.id}`;
       link.className = "link-produto";
 
+      let imagemSelecionada = p.imagem;
+
       const img = document.createElement("img");
-      img.src = p.imagem;
+      img.src = imagemSelecionada;
       img.alt = p.nome;
 
-  // Coloca a imagem dentro do link
-  link.appendChild(img);
+      let containerVariacoes;
+      if (Array.isArray(p.variacoes)) {
+        img.src = p.variacoes[0].imagem; // define a imagem como a primeira das variações
+        containerVariacoes = createCarousel(p.variacoes, img);
+      }
+      // Coloca a imagem dentro do link
+      link.appendChild(img);
       const info = document.createElement("div");
       info.className = "card-info";
       info.textContent = `${p.nome} - (${brl(p._precoNum ?? p.preco)})`;
@@ -94,7 +117,7 @@
       btnCar.textContent = "Adicionar ao carrinho";
       btnCar.addEventListener("click", () => {
         if (typeof adicionarAoCarrinho === "function") {
-          adicionarAoCarrinho(p.nome, p.id, p.preco, p.imagem);
+          adicionarAoCarrinho(p.nome, p.id, p.preco, imagemSelecionada);
         }
       });
 
@@ -103,11 +126,14 @@
       btnFav.textContent = "Adicionar a favoritos";
       btnFav.addEventListener("click", () => {
         if (typeof adicionarAFavoritos === "function") {
-          adicionarAFavoritos(p.nome, p.id, p.preco, p.imagem);
+          adicionarAFavoritos(p.nome, p.id, p.preco, imagemSelecionada);
         }
       });
 
       card.appendChild(link);
+      if (containerVariacoes) {
+        card.appendChild(containerVariacoes);
+      }
       card.appendChild(info);
       card.appendChild(btnCar);
       card.appendChild(btnFav);
@@ -128,7 +154,9 @@
 
     const lista = all.filter((p) => {
       const okTipo =
-        selTipos.length === 0 ? true : p._tipos.some((t) => selTipos.includes(t));
+        selTipos.length === 0
+          ? true
+          : p._tipos.some((t) => selTipos.includes(t));
       const precoNum =
         typeof p._precoNum === "number" ? p._precoNum : toNumberBR(p.preco);
       const okPreco = precoNum >= min && precoNum <= max;
@@ -172,3 +200,43 @@
       grid.innerHTML = "<p class='msg-vazio'>Erro ao carregar produtos.</p>";
     });
 })();
+
+/**
+ * 
+ * @param {Array} variacoes
+ * @param {HTMLUnknownElement} img 
+ * @returns 
+ */
+function createCarousel(variacoes, img) {
+  containerVariacoes = document.createElement("div");
+  containerVariacoes.className = "carousel-btns";
+
+
+  const backVar = document.createElement("button");
+  backVar.textContent = "<";
+  const forwardVar = document.createElement("button");
+  forwardVar.textContent = ">";
+
+  
+  let index = 0; 
+  forwardVar.addEventListener("click", () => {
+    index = index + 1;
+    
+    if (index >= variacoes.length) {
+      index = 0;
+    }
+    img.src = variacoes[index].imagem;
+  });
+
+
+  backVar.addEventListener("click", () => {
+    index = index - 1;
+    if (index < 0) {
+      index = variacoes.length - 1;
+    }
+    img.src = variacoes[index].imagem;
+  });
+  containerVariacoes.appendChild(forwardVar);
+  containerVariacoes.appendChild(backVar);
+  return containerVariacoes;
+}

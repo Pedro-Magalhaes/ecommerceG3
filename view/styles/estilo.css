@@ -72,6 +72,7 @@ img.categoria {
   border: 1px solid #ccc;
   border-radius: 20px;
   font-size: 24px;
+  font-family: 'secundaria';
 }
 
 #search-button {
@@ -86,6 +87,7 @@ img.categoria {
   cursor: pointer;
   margin: 1%;
   display:inline-block;
+  font-family: 'secundaria';
 }
 
 #search-button:hover {
@@ -103,7 +105,7 @@ img.categoria {
 }
 
 .categoria:hover {
- filter: brightness(1.3);
+ filter: brightness(1.07);
 }
 
 /*Sobre Nós*/
@@ -955,7 +957,17 @@ h1.fav {
   min-width: 24px;
   text-align: center;
   font-weight: bold;
-  }
+}
+
+.carousel-btns {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: stretch;
+}
+
 
 #produto-imagem{
   align-items: center;
@@ -963,3 +975,67 @@ h1.fav {
   margin:10px;
   padding:10px;
 }
+/*RESPONSIVIDADE*/
+@media screen and (400px <=width <=800px){
+ 
+    #filtroEsq{
+    position: static;
+    width: 90%;
+    max-width: 360px;
+    margin: 0 auto 20px auto;  /* espaço abaixo p/ os cards */
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 12px;
+  }
+
+  /* Produtos: centralizados e logo abaixo do filtro */
+  #produtos-container{
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    float: none !important;
+
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto 40px auto; /* centraliza e dá respiro até o rodapé */
+  }
+
+  /* A grade passa a 1 coluna e centraliza cada card */
+  .grid{
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  #search-container {
+    padding-bottom: 1rem;
+  }
+
+  #search-input {
+    width: 80%;
+    height:70px;
+    font-size: 20px;
+  }
+
+  img.categoria{
+    width: 438px;
+    height: 282px;
+  }
+}
+
+@media screen and (800px <=width <=1080px){
+
+  #search-container {
+    padding-bottom: 1rem;
+  }
+
+  #search-input {
+    width: 80%;
+    height:80px;
+    font-size: 22px;
+  }
+}
+
+@media screen and (1080px <=width <=1920px){
+  
+}
+

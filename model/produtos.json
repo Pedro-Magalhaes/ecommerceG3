@@ -90,19 +90,6 @@
       "descricao": "cômoda de madeira com gavetas",
       "imagem": "IMG/comoda.png"
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
     {
       "id": 11,
       "categoria": "Jardim",
@@ -122,14 +109,25 @@
       "imagem": "IMG/jardim/sofa-azul-marinho.png"
     },
     {
-      "id": 13,
-      "categoria": "Jardim",
-      "nome": "Churrasqueira moderna metálica",
-      "preco": 299.99,
-      "qtd": 25,
-      "descricao": "Churrasqueira moderna e de vida útil longa na cor laranja",
+  "id": 13,
+  "categoria": "Jardim",
+  "nome": "Churrasqueira moderna metálica",
+  "preco": 299.99,
+  "qtd": 25,
+  "descricao": "Churrasqueira moderna e de vida útil longa",
+  "variacoes": [
+    {
+      "cor": "laranja",
       "imagem": "IMG/jardim/churrasqueira-laranja.png"
     },
+    {
+      "cor": "vermelha",
+      "imagem": "IMG/jardim/churrasqueira-vermelha.png"
+    }
+  ],
+  "imagem": "IMG/jardim/churrasqueira-laranja.png"
+},
+
         {
       "id": 14,
       "categoria": "Jardim",
